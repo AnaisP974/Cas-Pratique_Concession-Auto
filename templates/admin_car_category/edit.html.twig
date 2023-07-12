@@ -1,13 +1,14 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit CarCategory{% endblock %}
+{% block title %}Modifer une catégorie{% endblock %}
 
 {% block body %}
-    <h1>Edit CarCategory</h1>
-
-    {{ include('admin_car_category/_form.html.twig', {'button_label': 'Update'}) }}
-
-    <a href="{{ path('app_admin_car_category_index') }}">back to list</a>
-
-    {{ include('admin_car_category/_delete_form.html.twig') }}
+<div class="container">
+    <h1>Modifer une catégorie</h1>
+    <div class="d-flex justify-content-between">
+        <a href="{{ path('app_admin_car_category_index') }}" class="btn btn-secondary">Retour à la liste</a>
+        {{ include('admin_car_category/_delete_form.html.twig') }}
+    </div>
+    {{ include('admin_car_category/_form.html.twig', {'button_label': 'Modifier'}) }}
+</div>
 {% endblock %}

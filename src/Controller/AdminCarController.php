@@ -34,6 +34,7 @@ class AdminCarController extends AbstractController
             $entityManager->persist($car);
             $entityManager->flush();
 
+            $this->addFlash("success", "Le nouveau véhicule a bien été créé !");
             return $this->redirectToRoute('app_admin_car_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -62,6 +63,7 @@ class AdminCarController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
 
+            $this->addFlash("warning", "Le véhicule a bien été modifié !");
             return $this->redirectToRoute('app_admin_car_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -78,6 +80,7 @@ class AdminCarController extends AbstractController
         if ($this->isCsrfTokenValid('delete'.$car->getId(), $request->request->get('_token'))) {
             $entityManager->remove($car);
             $entityManager->flush();
+            $this->addFlash("danger", "Le véhicule a bien été supprimé !");
         }
 
         return $this->redirectToRoute('app_admin_car_index', [], Response::HTTP_SEE_OTHER);

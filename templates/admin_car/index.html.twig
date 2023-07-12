@@ -4,14 +4,26 @@
 
 {% block body %}
 <div class="container">
-    <div class="d-flex justify-content-between align-items-center my-5">
-        <h1>Parc de véhicules :</h1>
-        <a href="{{ path('app_admin_home')}}" class="btn btn-secondary">Revenir au tableau de bord</a>
-    </div>
+
+    <h1>Parc de véhicules :</h1>
+    <a href="{{ path('app_admin_home')}}" class="btn btn-secondary">Revenir au tableau de bord</a>
+ 
 
     <div class="text-end mb-5">
         <a href="{{ path('app_admin_car_new') }}" class="btn btn-success">+ Nouveau</a>
     </div>   
+
+    {# Message Flash #}
+    <div class="container-fluid p-3">
+        {% for label, messages in app.flashes %}
+            {% for message in messages %}
+                <div class="alert alert-{{ label }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endfor %}
+    </div>
+
 
     <table class="table">
         <thead>
@@ -20,6 +32,7 @@
                 <th>Nom</th>
                 <th>Places assises</th>
                 <th>Nombre de portes</th>
+                <th>Catégorie</th>
                 <th>Prix</th>
                 <th>Actions</th>
             </tr>
@@ -31,11 +44,11 @@
                 <td>{{ car.name }}</td>
                 <td>{{ car.nbSeats }}</td>
                 <td>{{ car.nbDoors }}</td>
+                <td>{{ car.category }}</td>
                 <td>{{ car.cost }} €</td>
                 <td class="d-flex justify-content-around">
                     <a href="{{ path('app_admin_car_show', {'id': car.id}) }}"><i class="bi bi-eye-fill " title="Voir"></i></a>
                     <a href="{{ path('app_admin_car_edit', {'id': car.id}) }}"><i class="bi bi-pencil-fill text-success" title="Modifier"></i></a>
-                    <a href="{{ path('app_admin_car_delete', {'id': car.id}) }}"><i class="bi bi-trash-fill text-danger me-5" title="Supprimer"></i></a>
                 </td>
             </tr>
         {% else %}

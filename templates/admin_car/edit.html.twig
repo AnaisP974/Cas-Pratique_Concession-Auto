@@ -1,13 +1,16 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit Car{% endblock %}
+{% block title %}Modifier un véhicule{% endblock %}
 
 {% block body %}
-    <h1>Edit Car</h1>
+<div class="container">
+    <h1>Modifier un véhicule :</h1>
+    <div class="d-flex justify-content-between">
+        <a href="{{ path('app_admin_car_index') }}" class="btn btn-secondary">Retour à la liste</a>
+        {{ include('admin_car/_delete_form.html.twig') }}
+    </div>
 
-    {{ include('admin_car/_form.html.twig', {'button_label': 'Update'}) }}
+    {{ include('admin_car/_form.html.twig', {'button_label': 'Modifier'}) }}
+</div>
 
-    <a href="{{ path('app_admin_car_index') }}">back to list</a>
-
-    {{ include('admin_car/_delete_form.html.twig') }}
 {% endblock %}

@@ -10,6 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\String\Slugger\SluggerInterface;
 
 #[Route('/admin/category')]
 class AdminCarCategoryController extends AbstractController
@@ -24,16 +25,18 @@ class AdminCarCategoryController extends AbstractController
     }
 
     #[Route('/new', name: 'app_admin_car_category_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    public function new(Request $request, EntityManagerInterface $entityManager, SluggerInterface $slug): Response
     {
         $carCategory = new CarCategory();
         $form = $this->createForm(CarCategoryType::class, $carCategory);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $carCategory->setSlug($slug->slug(strtolower($carCategory->getName())));
             $entityManager->persist($carCategory);
             $entityManager->flush();
 
+            $this->addFlash("success", "La nouvelle catégorie a bien été créée !");
             return $this->redirectToRoute('app_admin_car_category_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -62,6 +65,7 @@ class AdminCarCategoryController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
 
+            $this->addFlash("warning", "La catégorie a bien été modifiée !");
             return $this->redirectToRoute('app_admin_car_category_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -78,6 +82,7 @@ class AdminCarCategoryController extends AbstractController
         if ($this->isCsrfTokenValid('delete'.$carCategory->getId(), $request->request->get('_token'))) {
             $entityManager->remove($carCategory);
             $entityManager->flush();
+            $this->addFlash("warning", "La catégorie a bien été supprimée !");
         }
 
         return $this->redirectToRoute('app_admin_car_category_index', [], Response::HTTP_SEE_OTHER);

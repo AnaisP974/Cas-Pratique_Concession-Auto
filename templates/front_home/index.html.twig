@@ -2,19 +2,23 @@
 
 {% block body %}
     {# DIRECT METEO PARIS #}
-    <div class="container d-flex justify-content-end">
-        <div class="col-6 col-md-4">
+    <div class="container d-flex justify-content-around">
+        <div class="col-7">
+            <h1 class="mt-4">CONCESSION-AUTO</h1>
+            <h4 class="text-secondary">(Cas Pratique : Skills4all)</h4>
+        </div>
+        <div class="col-6 col-md-4 alert alert-success mt-4">
             <h4>Météo en direct sur Paris :</h4>
-            <p>Le : {{ data_meteo.dt|date("d/m/Y") }}</p>
             <p>Temps : {{ data_meteo.weather.0.description }} </p>
             <p>Température : {{ data_meteo.main.temp }} °C</p>
         </div>
     </div>
 
+<div class="container d-flex flex-wrap justifycontent-between">
     {# FILTRER PAR LE NOM #}
-    <div class="container my-5">
-        <h4>Filtrer la recherche par le nom :</h4>
-        <div class="col-12 col-md-3 m-auto">
+    <div class="col-4 my-5">
+        <h5>Filtrer la recherche par le nom :</h5>
+        <div class="w-50">
             <form method="post">
                 <div class="input-group mb-3 me-5">
                     <input type="text" class="form-control" placeholder="Modèle recherché..." aria-label="Modèle recherché..." aria-describedby="searchByName" name="searchByName" required>
@@ -26,9 +30,9 @@
 
     {# FILTRER PAR CATEGORIE #}
     {% if categories is not null %}
-        <div class="container my-5">
-            <h4>Filtrer la recherche par catégorie :</h4>
-            <div class="d-flex justify-content-center">
+        <div class="col-6 my-5">
+            <h5>Filtrer la recherche par catégorie :</h5>
+            <div class="d-flex">
                 {% for category in categories %}
                 <a href="{{ path('app_front_filteredCategory', {slug: category.slug})}}"><button class="btn btn-light me-4">{{ category.name }}</button></a>
                 {% endfor %}
@@ -37,6 +41,7 @@
     {% else %}
         <p>Aucune catégorie de voitures existante.</p>
     {% endif %}
+</div>
 
     {# TOUS LES VEHICULES #}
     <div class="container">

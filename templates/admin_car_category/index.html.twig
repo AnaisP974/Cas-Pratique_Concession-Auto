@@ -4,13 +4,24 @@
 
 {% block body %}
 <div class="container">
-    <div class="d-flex justify-content-between align-items-center my-5">
-        <h1>Catégories de voitures</h1>
-        <a href="{{ path('app_admin_home')}}" class="btn btn-secondary">Revenir au tableau de bord</a>
-    </div>
+
+    <h1>Catégories de voitures</h1>
+    <a href="{{ path('app_admin_home')}}" class="btn btn-secondary">Revenir au tableau de bord</a>
     <div class="text-end mb-5">
         <a href="{{ path('app_admin_car_category_new') }}" class="btn btn-success">+ Nouveau</a>
     </div>
+
+    {# Message Flash #}
+    <div class="container-fluid p-3">
+        {% for label, messages in app.flashes %}
+            {% for message in messages %}
+                <div class="alert alert-{{ label }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endfor %}
+    </div>
+
     <table class="table table-responsive">
         <thead>
             <tr>

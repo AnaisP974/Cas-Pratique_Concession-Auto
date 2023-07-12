@@ -3,9 +3,11 @@
 {% block title %}New Car{% endblock %}
 
 {% block body %}
-    <h1>Create new Car</h1>
+<div class="d-flex justify-content-between align-items-center my-5">
+    <h1>Nouveau véhicule</h1>
+    <a href="{{ path('app_admin_car_index') }}" class="btn btn-secondary">Retourner à la liste</a>
+</div>
 
     {{ include('admin_car/_form.html.twig') }}
 
-    <a href="{{ path('app_admin_car_index') }}">back to list</a>
 {% endblock %}
