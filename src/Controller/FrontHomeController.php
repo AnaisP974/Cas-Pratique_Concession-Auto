@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Repository\CarRepository;
 use App\Repository\CarCategoryRepository;
+use App\Service\WeatherApi;
 use Knp\Component\Pager\PaginatorInterface;
 
 use Symfony\Component\HttpFoundation\Request;
@@ -11,12 +12,14 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
+
 class FrontHomeController extends AbstractController
 {
     #[Route('/', name: 'app_front_home', methods:['POST', 'GET'])]
-    public function index(CarRepository $carRepository, CarCategoryRepository $carCategoryRepository, Request $request, PaginatorInterface $paginator): Response
+    public function index(WeatherApi $weatherApi, CarRepository $carRepository, CarCategoryRepository $carCategoryRepository, Request $request, PaginatorInterface $paginator): Response
     {
-        
+        // dd($weatherApi->getParisData());
+
         // vérifier s'il y a une recherche dans la requête
         if(!is_null($request->request->get('searchByName'))){
             // récupérer la valeur de la recherche
@@ -41,6 +44,7 @@ class FrontHomeController extends AbstractController
            'categories' => $carCategoryRepository->findAll(),
            'selectedCategory' => null,
            'current_menu' => 'front',
+           'data_meteo' => $weatherApi->getParisData(),
         ]);
     }
 

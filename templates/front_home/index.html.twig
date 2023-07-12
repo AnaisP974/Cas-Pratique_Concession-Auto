@@ -1,6 +1,15 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+    {# DIRECT METEO PARIS #}
+    <div class="container d-flex justify-content-end">
+        <div class="col-6 col-md-4">
+            <h4>Météo en direct sur Paris :</h4>
+            <p>Le : {{ data_meteo.dt|date("d/m/Y") }}</p>
+            <p>Temps : {{ data_meteo.weather.0.description }} </p>
+            <p>Température : {{ data_meteo.main.temp }} °C</p>
+        </div>
+    </div>
 
     {# FILTRER PAR LE NOM #}
     <div class="container my-5">
