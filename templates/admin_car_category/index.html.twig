@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Catégories de voitures{% endblock %}
+
+{% block body %}
+<div class="container">
+    <div class="d-flex justify-content-between align-items-center my-5">
+        <h1>Catégories de voitures</h1>
+        <a href="{{ path('app_admin_home')}}" class="btn btn-secondary">Revenir au tableau de bord</a>
+    </div>
+    <div class="text-end mb-5">
+        <a href="{{ path('app_admin_car_category_new') }}" class="btn btn-success">+ Nouveau</a>
+    </div>
+    <table class="table table-responsive">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nom</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for car_category in car_categories %}
+            <tr>
+                <td>{{ car_category.id }}</td>
+                <td>{{ car_category.name }}</td>
+                <td>
+                    <a href="{{ path('app_admin_car_category_show', {'id': car_category.id}) }}"><i class="bi bi-eye-fill me-5" title="Voir"></i></a>
+                    <a href="{{ path('app_admin_car_category_edit', {'id': car_category.id}) }}"><i class="bi bi-pencil-fill text-success me-5" title="Modifier"></i></a>
+                    <a href="{{ path('app_admin_car_category_delete', {'id': car_category.id}) }}"><i class="bi bi-trash-fill text-danger me-5" title="Supprimer"></i></a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">Auncune catégorie trouvée</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+</div>
+{% endblock %}

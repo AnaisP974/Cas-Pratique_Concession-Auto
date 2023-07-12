@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello AdminHomeController!{% endblock %}
+
+{% block body %}
+<h1>Bienvenue sur le Tableau de Bord !</h1>
+<div class="row justify-content-around my-5">
+    <div class="card col-5 col-md-3 col-lg-2 admin-card">
+       
+        <img src="{{ asset('images/admin_home/vehicules_logo.png')}}" class="admin-img" alt="...">
+        <div class="card-body">
+             <a href="{{ path('app_admin_car_index')}}" class="admin_link"><p class="card-text">Gérer les véhicules <i class="bi bi-arrow-right ms-5"></i></p></a>
+        </div>
+        
+    </div>
+    <div class="card col-5 col-md-3 col-lg-2 admin-card">
+        <img src="{{ asset('images/admin_home/categories_logo.png')}}" class="admin-img" alt="...">
+        <div class="card-body">
+            <a href="{{ path('app_admin_car_category_index')}}" class="admin_link"><p class="card-text">Gérer les categories<i class="bi bi-arrow-right ms-5"></i></p></a>
+        </div>
+    </div>
+    
+</div>
+{% endblock %}

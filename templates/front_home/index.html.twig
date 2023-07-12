@@ -1,0 +1,57 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    {# FILTRER PAR LE NOM #}
+    <div class="container my-5">
+        <h4>Filtrer la recherche par le nom :</h4>
+        <div class="col-12 col-md-3 m-auto">
+            <form method="post">
+                <div class="input-group mb-3 me-5">
+                    <input type="text" class="form-control" placeholder="Modèle recherché..." aria-label="Modèle recherché..." aria-describedby="searchByName" name="searchByName" required>
+                    <button class="btn btn-outline-secondary" type="submit" id="searchByName"><i class="bi bi-search"></i></button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    {# FILTRER PAR CATEGORIE #}
+    {% if categories is not null %}
+        <div class="container my-5">
+            <h4>Filtrer la recherche par catégorie :</h4>
+            <div class="d-flex justify-content-center">
+                {% for category in categories %}
+                <a href="{{ path('app_front_filteredCategory', {slug: category.slug})}}"><button class="btn btn-light me-4">{{ category.name }}</button></a>
+                {% endfor %}
+            </div>
+        </div>
+    {% else %}
+        <p>Aucune catégorie de voitures existante.</p>
+    {% endif %}
+
+    {# TOUS LES VEHICULES #}
+    <div class="container">
+        {% if cars is not null %} 
+            <div class="row">
+                {% for car in cars %}
+                    <div class="card car_card col-9 col-md-4 ms-4 mb-3">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">Nom : {{ car.name}}</li>
+                            <li class="list-group-item">Description : {{ car.nbSeats }} places et {{ car.nbDoors }} portes</li>
+                            <li class="list-group-item">Catégorie : {{ car.category }}</li>
+                            <li class="list-group-item">Prix : {{ car.cost }} € </li>
+
+                        </ul>
+                    </div>
+                {% endfor %}
+            </div>
+            {# display navigation #}
+            <div class="navigation">
+                {{ knp_pagination_render(cars) }}
+            </div>
+        {% else %}
+            <p>Aucun véhicule disponible.</p>
+        {% endif %}
+    </div>
+
+{% endblock %}

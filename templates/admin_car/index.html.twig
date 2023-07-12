@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Admin : Voitures{% endblock %}
+
+{% block body %}
+<div class="container">
+    <div class="d-flex justify-content-between align-items-center my-5">
+        <h1>Parc de véhicules :</h1>
+        <a href="{{ path('app_admin_home')}}" class="btn btn-secondary">Revenir au tableau de bord</a>
+    </div>
+
+    <div class="text-end mb-5">
+        <a href="{{ path('app_admin_car_new') }}" class="btn btn-success">+ Nouveau</a>
+    </div>   
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nom</th>
+                <th>Places assises</th>
+                <th>Nombre de portes</th>
+                <th>Prix</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for car in cars %}
+            <tr>
+                <td>{{ car.id }}</td>
+                <td>{{ car.name }}</td>
+                <td>{{ car.nbSeats }}</td>
+                <td>{{ car.nbDoors }}</td>
+                <td>{{ car.cost }} €</td>
+                <td class="d-flex justify-content-around">
+                    <a href="{{ path('app_admin_car_show', {'id': car.id}) }}"><i class="bi bi-eye-fill " title="Voir"></i></a>
+                    <a href="{{ path('app_admin_car_edit', {'id': car.id}) }}"><i class="bi bi-pencil-fill text-success" title="Modifier"></i></a>
+                    <a href="{{ path('app_admin_car_delete', {'id': car.id}) }}"><i class="bi bi-trash-fill text-danger me-5" title="Supprimer"></i></a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">Aucun véhicule trouvé.</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+</div>
+{% endblock %}

@@ -2,10 +2,11 @@
 
 namespace App\Entity;
 
-use App\Repository\CarCategoryRepository;
+
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\CarCategoryRepository;
 
 #[ORM\Entity(repositoryClass: CarCategoryRepository::class)]
 class CarCategory
@@ -18,13 +19,30 @@ class CarCategory
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
-    #[ORM\OneToMany(mappedBy: 'carCategory', targetEntity: Car::class)]
+    #[ORM\OneToMany(mappedBy: 'category', targetEntity: Car::class)]
     private Collection $cars;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $slug = null;
+
+    // -------------------------------
+    //          MAGIC FUNCTION
+    // -------------------------------
 
     public function __construct()
     {
         $this->cars = new ArrayCollection();
     }
+
+    public function __toString(): string
+    {
+        return $this->name;
+    }
+
+
+    //--------------------------------------
+    //              GETTER SETTER
+    //--------------------------------------
 
     public function getId(): ?int
     {
@@ -55,7 +73,7 @@ class CarCategory
     {
         if (!$this->cars->contains($car)) {
             $this->cars->add($car);
-            $car->setCarCategory($this);
+            $car->setCategory($this);
         }
 
         return $this;
@@ -65,10 +83,22 @@ class CarCategory
     {
         if ($this->cars->removeElement($car)) {
             // set the owning side to null (unless already changed)
-            if ($car->getCarCategory() === $this) {
-                $car->setCarCategory(null);
+            if ($car->getCategory() === $this) {
+                $car->setCategory(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(?string $slug): static
+    {
+        $this->slug = $slug;
 
         return $this;
     }

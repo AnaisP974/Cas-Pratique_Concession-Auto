@@ -23,11 +23,10 @@ class Car
     private ?string $name = null;
 
     #[ORM\Column]
-    private ?float $cost = null;
+    private ?int $cost = null;
 
     #[ORM\ManyToOne(inversedBy: 'cars')]
-    private ?CarCategory $carCategory = null;
-
+    private ?CarCategory $category = null;
    
     public function getId(): ?int
     {
@@ -70,29 +69,28 @@ class Car
         return $this;
     }
 
-    public function getCost(): ?float
+    public function getCost(): ?int
     {
         return $this->cost;
     }
 
-    public function setCost(float $cost): static
+    public function setCost(int $cost): static
     {
         $this->cost = $cost;
 
         return $this;
     }
 
-    public function getCarCategory(): ?CarCategory
+    public function getCategory(): ?CarCategory
     {
-        return $this->carCategory;
+        return $this->category;
     }
 
-    public function setCarCategory(?CarCategory $carCategory): static
+    public function setCategory(?CarCategory $category): static
     {
-        $this->carCategory = $carCategory;
+        $this->category = $category;
 
         return $this;
     }
-
 
 }

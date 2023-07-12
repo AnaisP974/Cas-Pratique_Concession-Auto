@@ -1,0 +1,56 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}concession-auto :{% endblock %}
+
+{% block body %}
+    
+    {# FILTRER PAR LE NOM #}
+    <div class="container my-5">
+        <h4>Filtrer la recherche par le nom :</h4>
+        <div class="col-12 col-md-3 m-auto">
+            <form method="post">
+                <div class="input-group mb-3 me-5">
+                    <input type="text" class="form-control" placeholder="Modèle recherché..." aria-label="Modèle recherché..." aria-describedby="searchByName" name="searchByName" required>
+                    <button class="btn btn-outline-secondary" type="submit" id="searchByName"><i class="bi bi-search"></i></button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    {# FILTRER PAR CATEGORIE #}
+    {% if categories is not null %}
+        <div class="container my-5">
+            <h4>Filtrer la recherche par catégorie :</h4>
+            <div class="d-flex justify-content-center">
+                {% for category in categories %}
+                <a href="{{ path('app_front_filteredCategory', {slug: category.slug})}}"><button class="btn btn-light me-4">{{ category.name }}</button></a>
+                {% endfor %}
+                <a href="{{ path('app_front_home')}}"><button class="btn btn-warning me-4">Retirer le filtre</button></a>
+            </div>
+        </div>
+    {% else %}
+        <p>Aucune catégorie de voitures existante.</p>
+    {% endif %}
+
+    {# VEHICULES FILTRES PAR CATEGORIE #}
+    <div class="container row mt-5">
+        {% for car in selectedCategory.cars %}
+        <div class="card car_card col-9 col-md-4 ms-4 mb-3">
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">Nom : {{ car.name}}</li>
+                <li class="list-group-item">Description : {{ car.nbSeats }} places et {{ car.nbDoors }} portes</li>
+                <li class="list-group-item">Catégorie : {{ car.category }}</li>
+                <li class="list-group-item">Prix : {{ car.cost }} € </li>
+            </ul>
+        </div>
+        {% else %}
+            {# Alerte s'il n'y a aucune voiture pour cette catégorie #}
+            <div class="d-flex justify-content-center my-5">
+                <div class="alert alert-warning text-center w-80" role="alert">
+                    <p>La catégorie sélectionnée ne contient aucun véhicule.</p>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    
+{% endblock %}
